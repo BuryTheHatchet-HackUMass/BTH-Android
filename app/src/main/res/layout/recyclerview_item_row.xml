@@ -42,6 +42,8 @@
         android:text="@string/days_left"
         android:textColor="@android:color/white"
         android:textSize="14sp"
-        android:textStyle="italic" />
+        android:textStyle="italic"
+        android:paddingBottom="3dp"
+        android:paddingLeft="3dp"/>
 
 </RelativeLayout>
