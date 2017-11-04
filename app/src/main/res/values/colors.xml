@@ -5,4 +5,6 @@
     <color name="colorAccent">#FF4081</color>
     <color name="neonBlue">#17DDFF</color>
     <color name="neonRed">#FF5A5A</color>
+    <color name="ourPrimary">#1a8971</color>
+    <color name="ourSecondary">#cc5032</color>
 </resources>
