@@ -8,7 +8,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.*
 import java.net.URL
 
-private lateinit var linearLayoutManager: LinearLayoutManager
+private var linearLayoutManager: LinearLayoutManager? = null
 
 class MainActivity : AppCompatActivity() {
 
@@ -33,9 +33,6 @@ class MainActivity : AppCompatActivity() {
 
             }
         }
-
     }
-
-}
 
 }
