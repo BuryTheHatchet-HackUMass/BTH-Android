@@ -1,5 +1,6 @@
 package tech.burythehatchetwith.burythehatchet
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
@@ -26,6 +27,9 @@ class MainActivity : AppCompatActivity() {
         FontUtil.overrideFonts(findViewById(android.R.id.content), -1.0f, font, null,  null)
         getTopics("http://165.227.176.116:8080/threads")
         //println(topics)
+
+        startActivity(Intent(this, SubmissionActivity::class.java))
+
     }
 
 
