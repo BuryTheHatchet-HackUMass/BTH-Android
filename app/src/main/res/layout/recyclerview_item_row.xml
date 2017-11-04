@@ -1,49 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="150dp"
-    android:background="@android:color/black"
-    android:paddingTop="20dp"
-    android:paddingLeft="24dp"
-    android:paddingBottom="10dp">
+    android:layout_height="wrap_content"
+    android:background="@android:color/black">
 
-    <TextView
-        android:id="@+id/title_text_view"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="Helvetica"
-        android:text="Should gun control laws be changed in light of the Las Vegas shooting?"
-        android:textStyle="bold|italic"
-        android:textSize="18sp"
-        android:textColor="@android:color/white"
+        android:layout_height="150dp"
+        android:paddingBottom="10dp"
+        android:paddingTop="20dp"
+        android:paddingLeft="24dp"
+        android:paddingStart="24dp"
+        android:background="@drawable/vegas"
+        android:clipToPadding="false">
 
-        android:paddingRight="36dp"/>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="-24dp"
+            android:layout_marginStart="-24dp"
+            android:layout_marginTop="-20dp"
+            android:layout_marginBottom="-10dp"
+            android:background="#80000000"/>
 
-    <TextView
-        android:id="@+id/days_left_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:fontFamily="Helvetica"
-        android:text="3"
-        android:textColor="@android:color/white"
-        android:textSize="24sp"
-        android:textStyle="bold|italic" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="-24dp"
+            android:layout_marginStart="-24dp"
+            android:layout_marginTop="-20dp"
+            android:layout_marginBottom="-10dp"/>
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/days_left_text_view"
-        android:layout_toEndOf="@+id/days_left_text_view"
-        android:layout_toRightOf="@+id/days_left_text_view"
-        android:text="@string/days_left"
-        android:textColor="@android:color/white"
-        android:textSize="14sp"
-        android:textStyle="italic"
-        android:paddingBottom="3dp"
-        android:paddingLeft="3dp"/>
+        <TextView
+            android:id="@+id/title_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="Helvetica"
+            android:text="Should gun control laws be changed in light of the Las Vegas shooting?"
+            android:textStyle="bold|italic"
+            android:textSize="18sp"
+            android:textColor="@android:color/white"
+            android:paddingRight="36dp"/>
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/days_left_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:fontFamily="Helvetica"
+            android:text="3"
+            android:textColor="@android:color/white"
+            android:textSize="24sp"
+            android:textStyle="bold|italic" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/days_left_text_view"
+            android:layout_toEndOf="@+id/days_left_text_view"
+            android:layout_toRightOf="@+id/days_left_text_view"
+            android:text="@string/days_left"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            android:textStyle="italic"
+            android:paddingBottom="3dp"
+            android:paddingLeft="3dp"/>
+
+        <TextView
+            android:id="@+id/tag1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="gun control"
+            android:textStyle="bold|italic"
+            android:textColor="@android:color/white"
+            android:textSize="12dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/tag_outline"
+            android:paddingTop="3dp"
+            android:paddingBottom="5dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginEnd="12dp"/>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/vote_line_linear_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="5dp"
+        android:orientation="horizontal"
+        android:background="@drawable/vote_line_background">
+
+        <LinearLayout
+            android:id="@+id/blue_votes_linear_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/neonBlue"
+            android:layout_weight="64" />
+
+        <LinearLayout
+            android:id="@+id/red_votes_linear_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/neonRed"
+            android:layout_weight="36" />
+
+    </LinearLayout>
+
+</LinearLayout>
