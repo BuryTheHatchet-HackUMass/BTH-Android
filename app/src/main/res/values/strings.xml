@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Bury the Hatchet</string>
+    <string name="days_left">days left</string>
 </resources>
