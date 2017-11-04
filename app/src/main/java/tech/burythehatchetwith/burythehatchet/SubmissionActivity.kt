@@ -5,11 +5,12 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.uiThread
+import com.beust.klaxon.JsonObject
+import com.github.kittinunf.fuel.Fuel
+import com.github.kittinunf.fuel.httpPost
+import com.github.kittinunf.result.Result
 import kotlinx.android.synthetic.main.activity_submission.*
-import org.jetbrains.anko.sdk25.coroutines.onClick
-import java.net.URL
+import org.json.JSONArray
 
 /**
  * Submission activity for creating arguments.
@@ -17,8 +18,9 @@ import java.net.URL
  */
 class SubmissionActivity : AppCompatActivity() {
 
-    val factEndpoint : String = "165.227.176.116/factchecker"
-    val keywordEndpoint : String = "165.227.176.116/keywords"
+    val factEndpoint : String = "165.227.176.116:8080/factchecker"
+    val keywordEndpoint : String = "165.227.176.116:8080/keywords"
+    var lastCount = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,8 +35,12 @@ class SubmissionActivity : AppCompatActivity() {
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
 
-                var result = p0!!.split(" ").toString().toLowerCase()
-                getTopics()
+                val result = p0!!.split(" ").toString().toLowerCase()
+
+                //if (result.length != lastCount) {
+                    lastCount = result.length
+                    getFacts("http://165.227.176.116:8080/factchecker", p0.toString())
+                //}
 
             }
 
@@ -42,12 +48,21 @@ class SubmissionActivity : AppCompatActivity() {
 
     }
 
+    fun getFacts(URL : String, body: String) {
+        Log.e("BOD", body)
+        Fuel.post(URL, listOf("content" to body)).responseString { request, response, result ->
+            when(result){
+                is Result.Failure ->{
+                    //Log.e("HTTP Request","Failed")
+                    //Log.e("REsult", result.toString())
+                } is Result.Success ->{
+                    //Log.e("HTTP Request", "Success")
+                    var serverResponse = result.get()
+                    var jobj = JSONArray(serverResponse)
 
-    fun getTopics() {
-        doAsync {
-            val result = URL(factEndpoint).readText()
-            uiThread {
-                Log.e("RES", result);
+                    // Now change the UI / underlying model
+
+                }
             }
         }
     }
