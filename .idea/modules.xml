@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/BurytheHatchet.iml" filepath="$PROJECT_DIR$/BurytheHatchet.iml" />
+      <module fileurl="file://$PROJECT_DIR$/BTH-Android.iml" filepath="$PROJECT_DIR$/BTH-Android.iml" />
+      <module fileurl="file://C:\Users\aakas\Desktop\BTH\BTH-Android\BurytheHatchet.iml" filepath="C:\Users\aakas\Desktop\BTH\BTH-Android\BurytheHatchet.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

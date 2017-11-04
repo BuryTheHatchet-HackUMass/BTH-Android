@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
         val font = FontUtil.get("Helvetica.ttc", this)
         FontUtil.overrideFonts(findViewById(android.R.id.content), -1.0f, font, null,  null)
         val topics: String = getTopics("http://165.227.176.116:8080/threads")
-
+        println(topics)
     }
 
 
