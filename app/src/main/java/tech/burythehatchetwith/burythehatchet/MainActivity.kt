@@ -16,6 +16,7 @@ import com.github.kittinunf.result.Result
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_submission.*
 import org.json.JSONArray
+import org.json.JSONObject
 
 private var linearLayoutManager: LinearLayoutManager? = null
 
@@ -24,9 +25,9 @@ class MainActivity : AppCompatActivity() {
     data class userThread(val id: Long,
                       val title: String,
                       val expiration: Int,
-                      val tags: ArrayList<String>,
-                      val side1: String,
-                      val side2: String,
+                      val tags: String,
+                      val side_one: String,
+                      val side_two: String,
                       val image: String)
 
 
@@ -41,10 +42,10 @@ class MainActivity : AppCompatActivity() {
         val font = FontUtil.get("Helvetica.ttc", this)
         val dataEndpoint : String = "http://165.227.176.116:8080/threads"
         FontUtil.overrideFonts(findViewById(android.R.id.content), -1.0f, font, null,  null)
-        getTopics(dataEndpoint)
+        //getTopics(dataEndpoint)
         //println(topics)
 
-        //startActivity(Intent(this, SubmissionActivity::class.java))
+        startActivity(Intent(this, SubmissionActivity::class.java))
 
     }
 
@@ -58,13 +59,10 @@ class MainActivity : AppCompatActivity() {
                     Log.e("HTTP Request", "Failure")
                 }is Result.Success ->{
                     Log.e("HTTP Request", "Success")
-                    var topics: JsonArray<JsonObject> = parseString(result.get())
+                    var topics: JSONArray = JSONArray(result.get())
                     jsonToDm(topics)
-
                 }
-
             }
-
         }
     }
 
@@ -74,14 +72,14 @@ class MainActivity : AppCompatActivity() {
         return parser.parse(stringBuilder) as JsonArray<JsonObject>
     }
 
-    fun jsonToDm(jarr : JsonArray<JsonObject>){
+    fun jsonToDm(jarr : JSONArray){
         val mapper = jacksonObjectMapper()
         threadModel.clear()
-        (0 until jarr.size)
+        (0 until jarr.length())
                 .map { jarr.get(it) }
-                //.forEach { threadModel.add(mapper.readValue<MainActivity.userThread>(it.toString())) }
+                .forEach { threadModel.add(mapper.readValue<MainActivity.userThread>(it.toString())) }
 
-       // println(threadModel.get(0).title)
+        println(threadModel.get(0).title)
         Log.e("Threads", threadModel.size.toString())
     }
 }

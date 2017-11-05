@@ -12,7 +12,7 @@
         android:padding="8dp">
 
         <TextView
-            android:id="@+id/data_title"
+            android:id="@+id/dataTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Milk or Cereal First?"
@@ -21,7 +21,7 @@
             android:textStyle="bold|italic" />
 
         <TextView
-            android:id="@+id/data_source"
+            android:id="@+id/dataSource"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Dataset from Reddit.com"
@@ -30,7 +30,7 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/data_validity"
+        android:id="@+id/dataValidity"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_weight="0"

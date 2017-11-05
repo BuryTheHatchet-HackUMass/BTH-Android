@@ -5,14 +5,15 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.result.Result
 import kotlinx.android.synthetic.main.activity_submission.*
-import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.uiThread
+import kotlinx.android.synthetic.main.data_entry_view.view.*
+import org.jetbrains.anko.sdk25.coroutines.onClick
 import org.json.JSONArray
 
 /**
@@ -52,13 +53,30 @@ class SubmissionActivity : AppCompatActivity() {
 
     fun displayData() {
 
-        val mapper = jacksonObjectMapper()
+        Log.e("DISPLAY", "Displaying data links");
 
+        // First parse our Fact array into an object that we can use
+        val mapper = jacksonObjectMapper()
         var jarr = dataReceived
         factModel.clear()
         (0 until jarr!!.length())
             .map { jarr.get(it) }
             .forEach { factModel.add(mapper.readValue<Fact>(it.toString())) }
+
+        // For each item, we want to inflate a view and render components
+        factList.removeAllViews()
+        for (i in 0 until factModel.size) {
+
+            var currentFact = factModel.get(i)
+            val view = LayoutInflater.from(this).inflate(R.layout.data_entry_view, factList)
+            view.dataTitle.text = currentFact.title
+            view.dataSource.text = "Page from ${currentFact.src}"
+            view.dataValidity.text = "${currentFact.validity*100}%"
+
+            // TODO: Change validity percentage color
+            factList.addView(view)
+
+        }
 
     }
 
@@ -86,6 +104,8 @@ class SubmissionActivity : AppCompatActivity() {
                     } else {
                         sourcesOverview.text = "${jarr.length()} sources available"
                     }
+
+                    displayData()
 
                 }
 
