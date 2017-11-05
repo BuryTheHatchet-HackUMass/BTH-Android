@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="124dp">
+
+    <FrameLayout
+        android:id="@+id/colorCover"
+        android:layout_width="140dp"
+        android:layout_height="70dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:background="@drawable/blue_basic_gradient"
+        android:translationX="-7dp"
+        android:translationY="7dp">
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/grayCover"
+        android:layout_width="140dp"
+        android:layout_height="70dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:background="@color/proGray">
+
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/argContent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:maxWidth="130dp"
+        android:text="Temperatures have been rising annually"
+        android:textColor="@android:color/black"
+        android:textStyle="bold|italic" />
+
+</RelativeLayout>

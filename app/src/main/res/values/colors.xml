@@ -7,4 +7,7 @@
     <color name="neonRed">#FF5A5A</color>
     <color name="ourPrimary">#1a8971</color>
     <color name="ourSecondary">#cc5032</color>
+    <color name="proGray">#80dcdcdc</color>
+    <color name="negGray">#80000000</color>
+    <color name="lightBlue">#800095ff</color>
 </resources>

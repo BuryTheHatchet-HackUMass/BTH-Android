@@ -4,21 +4,17 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.util.Log
-import android.view.View
-import com.beust.klaxon.*
-import com.beust.klaxon.JsonArray
+import android.view.LayoutInflater
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import com.github.kittinunf.fuel.httpGet
 import com.github.kittinunf.result.Result
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_submission.*
+import kotlinx.android.synthetic.main.recyclerview_item_row.view.*
+import org.jetbrains.anko.sdk25.coroutines.onClick
 import org.json.JSONArray
-import org.json.JSONObject
-
-private var linearLayoutManager: LinearLayoutManager? = null
 
 class MainActivity : AppCompatActivity() {
 
@@ -36,16 +32,13 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        linearLayoutManager = LinearLayoutManager(this)
-        recyclerView.layoutManager = linearLayoutManager
 
         val font = FontUtil.get("Helvetica.ttc", this)
         val dataEndpoint : String = "http://165.227.176.116:8080/threads"
         FontUtil.overrideFonts(findViewById(android.R.id.content), -1.0f, font, null,  null)
-        //getTopics(dataEndpoint)
-        //println(topics)
+        getTopics(dataEndpoint)
 
-        startActivity(Intent(this, SubmissionActivity::class.java))
+        //startActivity(Intent(this, SubmissionActivity::class.java))
 
     }
 
@@ -66,12 +59,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun parseString(json : String) : JsonArray<JsonObject>{
-        val parser: Parser = Parser()
-        val stringBuilder: StringBuilder = StringBuilder(json)
-        return parser.parse(stringBuilder) as JsonArray<JsonObject>
-    }
-
     fun jsonToDm(jarr : JSONArray){
         val mapper = jacksonObjectMapper()
         threadModel.clear()
@@ -79,7 +66,37 @@ class MainActivity : AppCompatActivity() {
                 .map { jarr.get(it) }
                 .forEach { threadModel.add(mapper.readValue<MainActivity.userThread>(it.toString())) }
 
-        println(threadModel.get(0).title)
-        Log.e("Threads", threadModel.size.toString())
+        //val intent = Intent(this, ArgumentsActivity::class.java)
+        val intent = Intent(this, SubmissionActivity::class.java)
+
+        // For each item, we want to inflate a view and render components
+        topicList.removeAllViews()
+        for (i in 0 until threadModel.size) {
+
+            var currentThread = threadModel.get(i)
+            println(currentThread.title)
+            val view = LayoutInflater.from(this).inflate(R.layout.recyclerview_item_row, null)
+            view.titleTextView.text = currentThread.title
+            view.daysLeftTextView.text = currentThread.expiration.toString()
+            view.tagView.text = currentThread.tags.split(",").get(0)
+            Picasso.with(this)
+                    .load(currentThread.image)
+                    .resize(1250, 505)
+                    .centerCrop()
+                    .into(view.topicImage)
+
+            view.onClick {
+                intent.putExtra("id", currentThread.id)
+                intent.putExtra("title", currentThread.title)
+                intent.putExtra("image", currentThread.image)
+                intent.putExtra("expiration", currentThread.expiration)
+                intent.putExtra("tag", currentThread.tags.split(",").get(0))
+                startActivity(intent)
+            }
+
+            topicList.addView(view)
+
+        }
+
     }
 }

@@ -7,14 +7,19 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.Button
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.result.Result
 import kotlinx.android.synthetic.main.activity_submission.*
 import kotlinx.android.synthetic.main.data_entry_view.view.*
-import org.jetbrains.anko.sdk25.coroutines.onClick
 import org.json.JSONArray
+import android.animation.ValueAnimator
+import tech.burythehatchetwith.burythehatchet.R.id.textView
+import android.animation.ObjectAnimator
+import org.jetbrains.anko.sdk25.coroutines.onClick
+
 
 /**
  * Submission activity for creating arguments.
@@ -29,6 +34,8 @@ class SubmissionActivity : AppCompatActivity() {
     var hash = 0
     private var dataReceived : JSONArray? = null
     var factModel = mutableListOf<Fact>()
+    var viewList = mutableListOf<View>()
+    val mapper = jacksonObjectMapper()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,14 +56,21 @@ class SubmissionActivity : AppCompatActivity() {
 
         })
 
+        searchDataButton.setOnClickListener {
+            displayData()
+        }
+
     }
 
     fun displayData() {
 
+        val animation = ObjectAnimator.ofFloat(dataLinkContainer, "translationY", 0f)
+        animation.duration = 1000
+        animation.start()
+
         Log.e("DISPLAY", "Displaying data links");
 
         // First parse our Fact array into an object that we can use
-        val mapper = jacksonObjectMapper()
         var jarr = dataReceived
         factModel.clear()
         (0 until jarr!!.length())
@@ -68,10 +82,24 @@ class SubmissionActivity : AppCompatActivity() {
         for (i in 0 until factModel.size) {
 
             var currentFact = factModel.get(i)
-            val view = LayoutInflater.from(this).inflate(R.layout.data_entry_view, factList)
+            val view = LayoutInflater.from(this).inflate(R.layout.data_entry_view, null)
             view.dataTitle.text = currentFact.title
             view.dataSource.text = "Page from ${currentFact.src}"
             view.dataValidity.text = "${currentFact.validity*100}%"
+
+                    view.onClick{ v ->
+                        println("Clicked")
+                        insertButton.visibility = View.VISIBLE
+                        viewButton.visibility = View.VISIBLE
+                        sourcesOverview.visibility = View.GONE
+                        for (v in viewList) {
+                            if (v == view) {
+                                view.dataLinkCont.setBackgroundColor(resources.getColor(R.color.lightBlue))
+                            } else {
+                                view.dataLinkCont.setBackgroundColor(resources.getColor(R.color.colorPrimaryDark))
+                            }
+                        }
+                    }
 
             // TODO: Change validity percentage color
             factList.addView(view)
@@ -91,6 +119,7 @@ class SubmissionActivity : AppCompatActivity() {
                 //Log.e("HTTP Request", "Success")
                 val serverResponse = result.get()
                 val jarr = JSONArray(serverResponse)
+                dataReceived = jarr
 
                 val last = jarr.hashCode()
                 if (last != hash) {
@@ -103,9 +132,8 @@ class SubmissionActivity : AppCompatActivity() {
                         sourcesOverview.text = "No evidence available"
                     } else {
                         sourcesOverview.text = "${jarr.length()} sources available"
+                        //displayData()
                     }
-
-                    displayData()
 
                 }
 

@@ -21,8 +21,8 @@
         </activity>
         <activity
             android:name=".SubmissionActivity"
-            android:label="Discuss"
-            ></activity>
+            android:label="Discuss" />
+        <activity android:name=".ArgumentsActivity"></activity>
     </application>
 
 </manifest>
